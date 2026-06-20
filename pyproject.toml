@@ -1,0 +1,58 @@
+[project]
+name = "text-features-detector"
+version = "0.1.0"
+description = "LLM-as-Judge evaluation pipeline for binary text feature detection"
+readme = "README.md"
+requires-python = ">=3.13"
+authors = [
+    { name = "Kamil Woźniak", email = "kamilwozniak@agh.edu.pl" },
+]
+dependencies = [
+    # Core
+    "pydantic>=2.10",
+    "pyyaml>=6.0",
+    "typer>=0.15",
+    "rich>=13.0",
+    # Data
+    "datasets>=3.0",
+    "pandas>=2.2",
+    "numpy>=2.0",
+    # ML metrics
+    "scikit-learn>=1.5",
+    # Evaluation framework
+    "deepeval>=2.0",
+    # Reporting
+    "jinja2>=3.1",
+    "matplotlib>=3.9",
+    "seaborn>=0.13",
+    "pydantic-ai>=1.107.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-mock>=3.14",
+    "ruff>=0.8",
+]
+
+[project.scripts]
+tfd = "text_features_detector.cli:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/text_features_detector"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

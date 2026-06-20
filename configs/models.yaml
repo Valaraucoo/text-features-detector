@@ -1,0 +1,47 @@
+# OpenAI-only model registry for the LLM-Judge evaluation pipeline.
+
+models:
+  gpt-4.1-nano:
+    provider: openai
+    display_name: "GPT-4.1 nano (legacy cheap baseline)"
+    tier: legacy_cheap
+    cost_input_per_1m: 0.10
+    cost_output_per_1m: 0.40
+    max_concurrent: 3
+    max_tokens_output: 1024
+
+  gpt-4o-mini:
+    provider: openai
+    display_name: "GPT-4o mini (legacy cheap baseline)"
+    tier: legacy_cheap
+    cost_input_per_1m: 0.15
+    cost_output_per_1m: 0.60
+    max_concurrent: 3
+    max_tokens_output: 1024
+
+  gpt-4.1-mini:
+    provider: openai
+    display_name: "GPT-4.1 mini (legacy mini baseline)"
+    tier: legacy_mid
+    cost_input_per_1m: 0.40
+    cost_output_per_1m: 1.60
+    max_concurrent: 3
+    max_tokens_output: 1024
+
+  gpt-5.4-nano:
+    provider: openai
+    display_name: "GPT-5.4 nano"
+    tier: cheap
+    cost_input_per_1m: 0.20
+    cost_output_per_1m: 1.25
+    max_concurrent: 3
+    max_tokens_output: 1024
+
+  gpt-5.4-mini:
+    provider: openai
+    display_name: "GPT-5.4 mini"
+    tier: mid
+    cost_input_per_1m: 0.75
+    cost_output_per_1m: 4.50
+    max_concurrent: 3
+    max_tokens_output: 1024

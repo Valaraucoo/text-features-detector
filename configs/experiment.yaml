@@ -1,0 +1,66 @@
+# Final OpenAI-only benchmark experiment.
+#
+# Design:
+#   3 features × 100 balanced examples each = 300 samples
+#   5 OpenAI models
+#   2 strategies: simple_binary + GEval
+#   self_consistency_n=3 for every model
+#
+# Effective LLM calls:
+#   300 samples × 5 models × 2 strategies × (1 main call + 3 consistency calls) = 12,000 LLM calls
+#
+# Before running:
+#   tfd cost-estimate --config configs/experiment.yaml \
+#     --avg-input-tokens 350 --avg-output-tokens 120
+#
+# Run:
+#   tfd run --config configs/experiment.yaml
+#   tfd report --run-dir results/final_openai_2026
+
+run_id: "final_run"
+description: >
+  Final OpenAI-only LLM-as-judge benchmark: GPT-5.4 family, legacy cheap baselines,
+  GPT-5.5 Pro quality ceiling, and o3-pro reasoning ceiling. Evaluates three
+  binary text features with simple binary prompting and GEval, including
+  self-consistency n=3.
+
+datasets:
+  - name: sst2
+    max_samples: 100
+    balance_classes: true
+
+  - name: pavlick_formality
+    max_samples: 100
+    balance_classes: true
+
+  - name: cola
+    max_samples: 100
+    balance_classes: true
+
+model_ids:
+  # GPT-4 family
+  - gpt-4.1-nano
+  - gpt-4o-mini
+  - gpt-4.1-mini
+
+  # GPT-5.4 family
+  - gpt-5.4-nano
+  - gpt-5.4-mini
+
+strategies:
+  - simple_binary
+  - geval
+
+self_consistency_n: 3
+self_consistency_model_ids:
+  - gpt-4.1-nano
+  - gpt-4o-mini
+  - gpt-4.1-mini
+  - gpt-5.4-nano
+  - gpt-5.4-mini
+
+max_concurrent: 3
+timeout: 90.0
+temperature: 0.0
+seed: 42
+output_dir: results
